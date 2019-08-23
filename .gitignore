@@ -102,3 +102,10 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+settings.json
+*.png
+*.jpg
+*.jpeg
+*.pkl
+wt103_tiny.tgz
+pretrained.pth
