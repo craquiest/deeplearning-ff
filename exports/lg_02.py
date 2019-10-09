@@ -47,13 +47,11 @@ def relu_grad(inp, out):
     # inp.g is stored for lin_grad
 
 def lin_grad(inp, out, w, b):
-    # grad of matmul with respect to input
-    # grad of matrix prod = matri prod with transpose
-    # extension of grad of dot.prod wrt x being w.t ?
-    inp.g = out.g @ w.t()
-    w.g = (inp.unsqueeze(-1) * out.g.unsqueeze(1)).sum(0)
-    # extension of grad of dot.prod wrt w being x.t ?
-    b.g = out.g.sum(0)
+    # grad of matmul with respect to input,weight and biase
+    inp.g = out.g @ w.t()     # grad of matrix prod = matri prod with transpose
+    # Creating a giant outer product, just to sum it, is inefficient!
+    w.g = (inp.unsqueeze(-1) * out.g.unsqueeze(1)).sum(0) #sum over training examples (1/m baked in from mse_grad)
+    b.g = out.g.sum(0) #sum over training examples (1/m baked in from mse_grad)
 
 def forward_and_backward(inp, targ):
     # forward pass:
